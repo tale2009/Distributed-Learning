@@ -1,0 +1,30 @@
+server:
+  port: 1111
+
+
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///Users/kirra/Desktop/project/gitconfig/
+  profiles:
+    active: native
+#spring:
+#  profiles:
+#    active: git
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://gitee.com/stephanie0823/gitconfig.git
+#          search-paths: / # 读取文件的根地址
+#          default-label: master # 使用的默认分支，默认为 master
+#          username:  #git用户名
+#          password:  #git密码
+encrypt:
+  keyStore:
+    location: classpath:/secret.jks #store文件
+    password: stephanie #私钥密码
+    alias: mytestkey #别名
+    secret: stephanie #store密码
