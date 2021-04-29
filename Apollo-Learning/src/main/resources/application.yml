@@ -1,0 +1,17 @@
+server:
+  port: 1234
+app:
+  id: APOLLO_DEV
+apollo:
+  cacheDir: /Users/kirra/Desktop/project/Distributed-Learning/Apollo-Learning/configcache
+  cluster: default
+  meta: http://172.16.0.4:8080/
+  bootstrap:
+    enabled: true
+    namespaces: test01.yml,test02.properties
+    eagerLoad:
+      enabled: true
+jasypt:
+  encryptor:
+    password:  ero
+
