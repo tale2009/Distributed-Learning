@@ -1,0 +1,12 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dubbohmilyb.mapper.FreezeAccountMapper">
+
+    <update id="freezeAccountUS">
+        update freeze_account set us_freeze=us_freeze+#{money}
+        where id=#{id}
+    </update>
+    <update id="unFreezeAccountUS">
+        update freeze_account set us_freeze=us_freeze-#{money}
+        where id=#{id}
+    </update>
+</mapper>

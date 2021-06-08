@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dubbohmilyb.mapper.AccountMapper">
+    <update id="subtractAccountUS">
+        update account set us_wallet=us_wallet-#{money}
+        where id=#{id}
+        and us_wallet-#{money} &gt;= 0
+    </update>
+    <update id="exchangeAccountCNY">
+        update account set cn_wallet=cn_wallet+#{money}
+        where id=#{id}
+    </update>
+    <update id="returnAccountUS">
+        update account set us_wallet=us_wallet+#{money}
+        where id=#{id}
+    </update>
+</mapper>
