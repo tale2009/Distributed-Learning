@@ -1,0 +1,36 @@
+server:
+  port: 9529
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9527/eureka/
+spring:
+  application:
+    name: TCC-ORDER-SERVER
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:53306/mytest?useUnicode=true&characterEncoding=utf-8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+
+
+# Seata 配置项，对应 SeataProperties 类
+seata:
+  enable-auto-data-source-proxy: false
+  application-id: ${spring.application.name} # Seata 应用编号，默认为 ${spring.application.name}
+  tx-service-group: ${spring.application.name}-group # Seata 事务组编号，用于 TC 集群名
+  # Seata 服务配置项，对应 ServiceProperties 类
+  service:
+    # 虚拟组和分组的映射
+    vgroup-mapping:
+      TCC-ORDER-SERVER-group: default
+    # 分组和 Seata 服务的映射
+    grouplist:
+      default: 127.0.0.1:8091
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml

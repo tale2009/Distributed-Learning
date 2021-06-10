@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tccdemo.mapper.StockMapper">
+    <update id="checkStock">
+        update eshop_goods_stock set saled=saled+#{saled}
+        where stock_id=#{stockId}
+        and total &gt;= saled+#{saled}
+    </update>
+    <update id="costStock">
+        UPDATE eshop_goods_stock set saled = saled - #{saled}, total = total - #{saled}
+        WHERE stock_id=#{stockId}
+    </update>
+    <update id="returnStock">
+        UPDATE eshop_goods_stock set saled = saled - #{saled}
+        WHERE stock_id=#{stockId}
+    </update>
+</mapper>
