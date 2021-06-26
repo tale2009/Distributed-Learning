@@ -1,0 +1,53 @@
+server:
+  port: 1236
+
+#通过datasource.*，区分数据库
+sharding:
+  datasources:
+    db0:
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:53306/mytest?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      type: com.zaxxer.hikari.HikariDataSource
+      maximum-pool-size: 20
+      max-lifetime: 30000
+      idle-timeout: 30000
+      data-source-properties:
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        cachePrepStmts: true
+        useServerPrepStmts: true
+    db1:
+      driverClassName: com.mysql.jdbc.Driver
+      jdbcUrl: jdbc:mysql://localhost:53306/mytest2?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: 123456
+      type: com.zaxxer.hikari.HikariDataSource
+      maximum-pool-size: 20
+      max-lifetime: 30000
+      idle-timeout: 30000
+      data-source-properties:
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        cachePrepStmts: true
+        useServerPrepStmts: true
+
+rules:
+  tables:
+    eshop_address:
+      actualDataNodes: db${0..1}.eshop_address #db${0..1}.eshop_address_${0..15}
+      databaseStrategy:
+        inline:
+          shardingColumn: city_code #根据city_code进行第一级分到2个不同的库
+          algorithmExpression: db${city_code % 2}
+#      tableStrategy:
+#        inline:
+#          shardingColumn: region_code #根据region_code分到不同的16个表中
+#          algorithmExpression: eshop_address_${region_code % 15}
+  props:
+    sql:
+      show: true
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+

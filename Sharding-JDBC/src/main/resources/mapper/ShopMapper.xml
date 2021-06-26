@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="scan.mapper.ShopMapper">
+    <resultMap id="map" type="scan.po.AdressPO">
+        <id column="address_id" property="addressId"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="region_code" property="regionCode"/>
+    </resultMap>
+    <insert id="insert">
+        insert into eshop_address(address_id,user_id,address_name,country_code,phone,province_code,city_code,region_code,detail,create_user_id,create_time,modify_user_id,modify_time)
+        values
+        <foreach collection="list" separator="," item="item">
+            (#{item.addressId}, #{item.userId}, #{item.addressName}, #{item.countryCode}, #{item.phone},
+            #{item.provinceCode}, #{item.cityCode}, #{item.regionCode}, #{item.detail}, #{item.createUserId}, #{item.createTime}, #{item.modifyUserId},
+            #{item.modifyTime})
+        </foreach>
+    </insert>
+    <select id="find" resultMap="map">
+        select address_id,user_id,address_name,country_code,phone,province_code,city_code,region_code,
+        detail,create_user_id,create_time,modify_user_id,modify_time
+        from eshop_address
+        where city_code=#{cityCode}
+    </select>
+</mapper>
