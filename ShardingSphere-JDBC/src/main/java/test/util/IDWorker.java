@@ -1,20 +1,15 @@
-package scan.util;
+package test.util;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 1.基于容器环境特质省掉原始算法需要手动初始化的构造器
- * 2.使用map保存每个表的IDWorker实例，id在一定程度上连续
- * 3.去掉一些容器环境下不会出现的异常判断
- */
 public class IDWorker {
     /**
      * 根据不同表会有不同表的保存不同表的IDWorker实例保证不同表的ID是有序的
      */
-    public static Map<String, IDWorker> workerInstanceMap=new HashMap<String, IDWorker>();
+    public static Map<String,IDWorker> workerInstanceMap=new HashMap<String, IDWorker>();
 
 
     private long twepoch = 1288834974657L; //起始时间戳，用于用当前时间戳减去这个时间戳，算出偏移量
@@ -62,8 +57,8 @@ public class IDWorker {
             //8191L & seqMask=8191
             //8192L & seqMask=0
             sequence = (sequence + 1) & sequenceMask;
-            // 如果sequence溢出则变为0，说明1毫秒内并发生成的ID数量超过了4096个
-            // 又因为这个方法使用了synchronized，所以4097的数据在这个方法结束之前是进不来的
+            // 如果sequence溢出则变为0，说明1毫秒内并发生成的ID数量超过了8191个
+            // 又因为这个方法使用了synchronized，所以8192的数据在这个方法结束之前是进不来的
             // 这个时候同1毫秒的第8192个生成的ID必须等待下一毫秒，
             if (sequence == 0) {
                 // 死循环等待下一个毫秒值，直到比lastTimestamp大

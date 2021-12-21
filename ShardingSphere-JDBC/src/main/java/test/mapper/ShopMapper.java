@@ -1,7 +1,7 @@
-package scan.mapper;
+package test.mapper;
 
 import org.springframework.stereotype.Repository;
-import scan.po.AdressPO;
+import test.po.AdressPO;
 
 import java.util.List;
 

@@ -1,12 +1,8 @@
-server:
-  port: 1236
-
-
 sharding:
   datasources: #定义不同的分库
     db0:
       driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://localhost:53306/mytest?useUnicode=true&characterEncoding=utf-8
+      jdbcUrl: jdbc:mysql://localhost:63306/mytest?useUnicode=true&characterEncoding=utf-8
       username: root
       password: 123456
       type: com.zaxxer.hikari.HikariDataSource
@@ -20,7 +16,7 @@ sharding:
         useServerPrepStmts: true
     db1:
       driverClassName: com.mysql.jdbc.Driver
-      jdbcUrl: jdbc:mysql://localhost:53306/mytest2?useUnicode=true&characterEncoding=utf-8
+      jdbcUrl: jdbc:mysql://localhost:63306/mytest2?useUnicode=true&characterEncoding=utf-8
       username: root
       password: 123456
       type: com.zaxxer.hikari.HikariDataSource
@@ -34,20 +30,30 @@ sharding:
         useServerPrepStmts: true
 
 rules:
-  tables:
-    eshop_address: #基于eshop_address设置规则
-      actualDataNodes: db${0..1}.eshop_address #db${0..1}.eshop_address_${0..15}   #db${0..1}用于分库 eshop_address_${0..15} 用于分表
-      databaseStrategy:
-        inline:
-          shardingColumn: city_code #根据city_code进行第一级分到2个不同的库
-          algorithmExpression: db${city_code % 2}
-#      tableStrategy:
-#        inline:
-#          shardingColumn: region_code #根据region_code分到不同的16个表中
-#          algorithmExpression: eshop_address_${region_code % 15}
+  sharding:
+    tables:
+      eshop_address: #基于eshop_address设置规则
+        actualDataNodes: db${0..1}.eshop_address_${0..1} #db${0..1}.eshop_address_${0..15}   #db${0..1}用于分库 eshop_address_${0..15} 用于分表
+        databaseStrategy:
+          standard: # 用于单分片键的标准分片场景
+            shardingColumn: city_code # 根据city_code分到不同的2个库中
+            shardingAlgorithmName: database_inline # 分库算法名称
+        tableStrategy:
+          standard:
+            shardingColumn: region_code #根据region_code分到不同的2个表中
+            shardingAlgorithmName: table_inline
+    shardingAlgorithms:
+      database_inline:
+        type: INLINE
+        props:
+          # 数据库分片规则， id取模2，结果有 0 和 1，路由到 0 和 1这两个数据库
+          algorithm-expression: db${city_code % 2}
+      table_inline:
+        type: INLINE
+        props:
+          # 数据表分片规则， id取模2，结果有 0 和 1，路由到 0 和 1这两个表中
+          algorithm-expression: eshop_address_${region_code % 2}
   props:
-    sql:
-      show: true
+    sql-show: true
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-

@@ -1,4 +1,4 @@
-package scan.po;
+package test.po;
 
 import java.util.Date;
 
@@ -10,12 +10,17 @@ public class AdressPO {
     private String phone;
     private String provinceCode;
     private Long cityCode;
-    private String regionCode;
+    private Long regionCode;
     private String detail;
     private Long createUserId;
     private Date createTime;
     private Long modifyUserId;
     private Date modifyTime;
+    private String addressNameEncrypt;
+    private String addressNameChiper;
+    private String addressNamePlain;
+
+
 
     public Long getAddressId() {
         return addressId;
@@ -73,11 +78,11 @@ public class AdressPO {
         this.cityCode = cityCode;
     }
 
-    public String getRegionCode() {
+    public Long getRegionCode() {
         return regionCode;
     }
 
-    public void setRegionCode(String regionCode) {
+    public void setRegionCode(Long regionCode) {
         this.regionCode = regionCode;
     }
 
@@ -119,5 +124,29 @@ public class AdressPO {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    public String getAddressNameEncrypt() {
+        return addressNameEncrypt;
+    }
+
+    public void setAddressNameEncrypt(String addressNameEncrypt) {
+        this.addressNameEncrypt = addressNameEncrypt;
+    }
+
+    public String getAddressNameChiper() {
+        return addressNameChiper;
+    }
+
+    public void setAddressNameChiper(String addressNameChiper) {
+        this.addressNameChiper = addressNameChiper;
+    }
+
+    public String getAddressNamePlain() {
+        return addressNamePlain;
+    }
+
+    public void setAddressNamePlain(String addressNamePlain) {
+        this.addressNamePlain = addressNamePlain;
     }
 }
